@@ -1,19 +1,19 @@
 package v2.entities;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class GerenciadorArquivos {
     private String nomeArquivo = "medicoes";
-    private String extensaoArquivo;
 
     public GerenciadorArquivos() {
     }
 
-    public GerenciadorArquivos(String nomeArquivo, String extensaoArquivo) {
+    public GerenciadorArquivos(String nomeArquivo) {
         this.nomeArquivo = nomeArquivo;
-        this.extensaoArquivo = extensaoArquivo;
     }
 
     public void escrevendoArquivoTXT(String line) {
@@ -34,8 +34,28 @@ public class GerenciadorArquivos {
         }
     }
 
-    
+    public void lendoArquivoTXT() {
+        try(BufferedReader br = new BufferedReader(new FileReader(nomeArquivo + ".txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao ler o arquivo TXT: " + e.getMessage());
+        }
+    }
 
+    public void lendoArquivoCSV() {
+        try(BufferedReader br = new BufferedReader(new FileReader(nomeArquivo + ".csv"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(";");
+                System.out.println(String.join(" | ", values));
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao ler o arquivo CSV: " + e.getMessage());
+        }
+    }
 
     public String getNomeArquivo() {
         return nomeArquivo;
@@ -45,11 +65,4 @@ public class GerenciadorArquivos {
         this.nomeArquivo = nomeArquivo;
     }
 
-    public String getExtensaoArquivo() {
-        return extensaoArquivo;
-    }
-
-    public void setExtensaoArquivo(String extensaoArquivo) {
-        this.extensaoArquivo = extensaoArquivo;
-    }
 }

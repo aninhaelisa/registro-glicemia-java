@@ -31,6 +31,7 @@ public class App {
 
                 switch (op) {
                     case 1:
+                        System.out.println("Adicionando medição...");
                         System.out.print("Hora (hh:mm): ");
                         String hora = sc.nextLine();
                         System.out.print("Data (dd/mm/aaaa): ");
@@ -67,8 +68,20 @@ public class App {
                         gerenciadorArquivos.escrevendoArquivoCSV(linhaCSV);
                         break;
 
+                    case 2:
+                        System.out.println("Lendo arquivos...");
+                        System.out.println("Quer ler arquivo TXT ou CSV? (txt/csv): ");
+                        String tipoArquivo = sc.nextLine();
+                        if (tipoArquivo.equalsIgnoreCase("txt")) {
+                            gerenciadorArquivos.lendoArquivoTXT();
+                        } else if (tipoArquivo.equalsIgnoreCase("csv")) {
+                            gerenciadorArquivos.lendoArquivoCSV();
+                            
+                        } else {
+                            System.out.println("Opção inválida. Voltando ao menu.");
+                        }
                     
-
+                        break;
                     case 0:
                         System.out.println("Saindo...");
                         for (int i = 0; i < 10; i++) {
