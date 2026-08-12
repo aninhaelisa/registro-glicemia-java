@@ -3,6 +3,7 @@ package v2;
 import java.util.Locale;
 import java.util.Scanner;
 
+import v2.entities.GerenciadorArquivos;
 import v2.entities.Medicao;
 
 public class App {
@@ -10,7 +11,9 @@ public class App {
 
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
+
         Medicao medicao = new Medicao();
+        GerenciadorArquivos gerenciadorArquivos = new GerenciadorArquivos();
 
         int op = -1;
 
@@ -55,10 +58,16 @@ public class App {
 
                         medicao.covertendoHoraData(data, hora);
                         medicao.setGlicemia(glicemia);
-
                         System.out.println(medicao.meuToString(medicao.getData(), medicao.getHora()));
 
+                        String[] linhaCSV = { String.valueOf(glicemia), data, hora, medicao.getObservacao() };
+                        String linhaTXT = medicao.meuToString(medicao.getData(), medicao.getHora());
+                        
+                        gerenciadorArquivos.escrevendoArquivoTXT(linhaTXT);
+                        gerenciadorArquivos.escrevendoArquivoCSV(linhaCSV);
                         break;
+
+                    
 
                     case 0:
                         System.out.println("Saindo...");
@@ -68,6 +77,7 @@ public class App {
                         }
                         System.out.println("Programa encerrado.");
                         break;
+
                     default:
                         System.out.println("Opção inválida");
                         break;
