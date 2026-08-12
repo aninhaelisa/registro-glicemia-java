@@ -22,13 +22,15 @@ public class App {
             while (op != 0) {
                 System.out.println("------------------------- Controle de glicemia ------------------------------");
                 System.out.println("1 - Adicionar medição   |   2 - Listar medições  |   3 - Média             ");
-                System.out.println("4 - Hora/Data ranking   |   5 - Buscar           |   6 - Remover medição   ");
+                System.out.println("4 - Ranking Completo    |   5 - Buscar           |   6 - Remover medição   ");
                 System.out.println("0 - Sair                |");
                 System.out.print("> ");
                 op = sc.nextInt();
 
                 sc.nextLine();
+                System.out.println();
 
+                System.out.println("-----------------------------------------------------------------------------");
                 switch (op) {
                     case 1:
                         System.out.println("Adicionando medição...");
@@ -63,7 +65,7 @@ public class App {
 
                         String[] linhaCSV = { String.valueOf(glicemia), data, hora, medicao.getObservacao() };
                         String linhaTXT = medicao.meuToString(medicao.getData(), medicao.getHora());
-                        
+
                         gerenciadorArquivos.escrevendoArquivoTXT(linhaTXT);
                         gerenciadorArquivos.escrevendoArquivoCSV(linhaCSV);
                         break;
@@ -76,23 +78,31 @@ public class App {
                             gerenciadorArquivos.lendoArquivoTXT();
                         } else if (tipoArquivo.equalsIgnoreCase("csv")) {
                             gerenciadorArquivos.lendoArquivoCSV();
-                            
+
                         } else {
                             System.out.println("Opção inválida. Voltando ao menu.");
                         }
-                    
+
                         break;
-                    
+
                     case 3:
+                        System.out.println("AVISO: Este programa possui finalidade exclusivamente didática.");
+                        System.out.println("Os resultados não devem ser utilizados para diagnóstico médico.");
+                        Thread.sleep(500);
                         System.out.print("Média glicêmica: ");
                         medicao.media();
+                        medicao.maiorMenor();
 
+                        break;
+                    case 4:
+                        System.out.println("Ranking completo das medições:");
+                        medicao.rankingCompleto();
                         break;
                     case 0:
                         System.out.println("Saindo...");
                         for (int i = 0; i < 10; i++) {
                             System.out.print("||");
-                            Thread.sleep(700);
+                            Thread.sleep(200);
                         }
                         System.out.println("Programa encerrado.");
                         break;

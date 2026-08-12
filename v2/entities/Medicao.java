@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Medicao extends GerenciadorArquivos {
     private Double glicemia;
@@ -35,15 +37,12 @@ public class Medicao extends GerenciadorArquivos {
         meuToString(this.data, this.hora);
     }
 
-    public void media(){
-        
-        try(BufferedReader br = new BufferedReader(new FileReader(super.getNomeArquivo() + ".csv"))) {
+    public void media() {
+        try (BufferedReader br = new BufferedReader(new FileReader(super.getNomeArquivo() + ".csv"))) {
             String line;
             double soma = 0;
             int count = 0;
-
             String linhaCabecalho = br.readLine();
-
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(";");
                 if (values.length > 0) {
@@ -64,6 +63,71 @@ public class Medicao extends GerenciadorArquivos {
             }
         } catch (IOException e) {
             System.out.println("Erro ao ler o arquivo CSV para calcular a média: " + e.getMessage());
+        }
+    }
+
+    public void maiorMenor() {
+        String line;
+        try (BufferedReader br = new BufferedReader(new FileReader(super.getNomeArquivo() + ".csv"))) {
+            String linhaCabecalho = br.readLine(); // Lê a primeira linha (cabeçalho) e a ignora
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(";");
+                if (values.length > 0) {
+                    try {
+                        double glicemia = Double.parseDouble(values[0]);
+                        if (glicemia < 70) {
+                            System.out.println("Hipoglicemia: " + glicemia + " mg/dL");
+                        } else if (glicemia >= 70 && glicemia <= 99) {
+                            System.out.println("Normal: " + glicemia + " mg/dL");
+                        } else if (glicemia >= 100 && glicemia <= 125) {
+                            System.out.println("Pré-diabetes: " + glicemia + " mg/dL");
+                        } else if (glicemia >= 126) {
+                            System.out.println("Diabetes: " + glicemia + " mg/dL");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Erro ao converter glicemia para número: " + e.getMessage());
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao ler o arquivo CSV para ranking: " + e.getMessage());
+        }
+    }
+
+    public void rankingCompleto() {
+        String line;
+        List<String[]> medidas = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(super.getNomeArquivo() + ".csv"))) {
+            String linhaCabecalho = br.readLine();
+
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(";");
+
+                if (values.length >= 3) {
+                    try {
+                        Double glicemia = Double.parseDouble(values[0]);
+
+                        medidas.add(values);
+
+                    } catch (NumberFormatException e) {
+                        System.out.println("Erro ao converter glicemia para número: " + e.getMessage());
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao ler o arquivo CSV para ranking completo: " + e.getMessage());
+        }
+
+        medidas.sort((a, b) -> Double.compare(Double.parseDouble(b[0]), Double.parseDouble(a[0])));
+        int posicao = 1;
+
+        for (String[] medida : medidas) {
+            System.out.println(
+                    posicao++ + "º - " +
+                            medida[0] + " mg/dL | " +
+                            medida[1] + " | " +
+                            medida[2]);
         }
     }
 
