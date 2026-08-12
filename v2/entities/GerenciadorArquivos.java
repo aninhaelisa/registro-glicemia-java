@@ -18,10 +18,8 @@ public class GerenciadorArquivos {
 
     public void escrevendoArquivoTXT(String line) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(nomeArquivo + ".txt", true))) {
-
             bw.write(line);
             bw.newLine();
-
         } catch (Exception e) {
             System.out.println("Erro ao escrever no medicoes.txt: " + e.getMessage());
         }
@@ -29,14 +27,15 @@ public class GerenciadorArquivos {
 
     public void escrevendoArquivoCSV(String[] line) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(nomeArquivo + ".csv", true))) {
-
             bw.write(String.join(";", line));
             bw.newLine();
-
         } catch (IOException e) {
             System.out.println("Erro ao escrever no arquivo CSV: " + e.getMessage());
         }
     }
+
+    
+
 
     public String getNomeArquivo() {
         return nomeArquivo;
