@@ -40,10 +40,19 @@ Esse projeto foi criado com o objetivo de ajudar no acompanhamento diário da gl
 ## 📂 Estrutura do projeto
 
 ```bash
-controle-glicemia-java/
+registro-glicemia-java/
 │
-├── App.java
-├── glicemia_exemplo.txt
+├── v1
+│   ├── App.java
+│   └──glicemia_exemplo.txt
+├── v2
+│   ├── App.java
+│   └── entities
+│       ├── GerenciadorArquivos.java
+│       └── Medicao.java
+│
+├── medicoes.csv
+├── medicoes.txt  
 └── README.md
 ```
 
@@ -70,55 +79,24 @@ App.java
 
 ---
 
-## 📋 Exemplo do menu
+## 📋 Exemplo do menu v2
 
 ```text
-==============================
-   CONTROLE DE GLICEMIA
-==============================
-1 - Adicionar medição
-2 - Ver todas as medições
-3 - Ver maior glicemia
-4 - Ver menor glicemia
-5 - Ver dia com maior média
-6 - Ver dia com menor média
-7 - Ver hora com maior média
-8 - Ver hora com menor média
-9 - Buscar medições por dia
-0 - Sair
+------------------------- Controle de glicemia ------------------------------
+1 - Adicionar medição   |   2 - Listar medições  |   3 - Média             
+4 - Ranking Completo    |   5 - Buscar           |   6 - Remover medição  
+0 - Sair                |
+> 
 ```
 
 ---
 
-## 💾 Sobre o arquivo `.txt`
+## ⚠️ Arquivos fictício para demonstração
 
-As medições são armazenadas em um arquivo de texto no seguinte formato:
+Todos os arquivos presentes neste repositório contém **dados fictícios**, criados apenas para demonstrar o funcionamento do sistema.
 
-```txt
-110;2026-04-08T17:34:33.541610900
-140;2026-04-01T14:55
-98;2026-04-02T07:15
-```
-
-### Estrutura:
-```txt
-valorDaGlicemia;dataHora
-```
-
-Exemplo:
-- `110` = valor da glicemia
-- `2026-04-08T17:34:33.541610900` = data e hora da medição
-
----
-
-## ⚠️ Arquivo fictício para demonstração
-
-O arquivo **`glicemia.txt`** presente neste repositório contém **dados fictícios**, criados apenas para demonstrar o funcionamento do sistema.
-
-Esses dados:
-- **não pertencem a nenhuma pessoa real**
-- **não devem ser utilizados para fins médicos**
-- servem apenas para **teste, estudo e apresentação do projeto**
+>AVISO: Este programa possui finalidade exclusivamente didática.
+>Os resultados não devem ser utilizados para diagnóstico médico.
 
 ---
 
@@ -131,12 +109,9 @@ Além do aprendizado técnico, a proposta foi criar algo com **utilidade real**,
 ---
 
 ## 🚀 Possíveis melhorias futuras
-
-- adicionar observações à medição (ex: jejum, após almoço, antes de dormir)
-- calcular média geral
-- gerar relatório em `.txt`
-- permitir exclusão de medições
-- ordenar medições por data
+- banco de dados
+- filtros mais avançados
+- exportação de relatorios
 - criar interface gráfica futuramente
 
 ---
