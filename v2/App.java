@@ -63,7 +63,7 @@ public class App {
                         medicao.setGlicemia(glicemia);
                         System.out.println(medicao.meuToString(medicao.getData(), medicao.getHora()));
 
-                        String[] linhaCSV = { String.valueOf(glicemia), data, hora, medicao.getObservacao() };
+                        String[] linhaCSV = { String.format("%.2f", glicemia), data, hora, medicao.getObservacao() };
                         String linhaTXT = medicao.meuToString(medicao.getData(), medicao.getHora());
 
                         gerenciadorArquivos.escrevendoArquivoTXT(linhaTXT);

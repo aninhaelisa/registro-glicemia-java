@@ -1,3 +1,6 @@
-Glicemia: 130.43 | Data: 2026-08-12 | Hora: 17:04 | Observação: Arroz integral no Almoco
-Glicemia: 112.08 | Data: 2026-07-13 | Hora: 13:54 | Observação: Sem observação
-Glicemia: 200.32 | Data: 2026-08-10 | Hora: 12:34 | Observação: Sem observação
+Glicemia: 130.43 | Data: 12/08/2026 | Hora: 17:04 | Observação: Arroz integral no Almoco
+Glicemia: 200.32 | Data: 10/08/2026 | Hora: 12:34 | Observação: Sem observação
+Glicemia: 123.54 | Data: 13/09/2026 | Hora: 22:00 | Observação: Jejum
+Glicemia: 100.01 | Data: 01/01/2026 | Hora: 01:00 | Observação: Sem observação
+Glicemia: 120.00 | Data: 10/10/2026 | Hora: 10:00 | Observação: pao integral cafe da manha
+Glicemia: 102.91 | Data: 02/01/2026 | Hora: 02:02 | Observação: Jejum

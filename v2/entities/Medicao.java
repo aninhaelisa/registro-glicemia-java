@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -219,6 +218,7 @@ public class Medicao extends GerenciadorArquivos {
     }
 
     public void removerPorDataHoraTXT(String dataBusca, String horaBusca) {
+
         String arquivo = super.getNomeArquivo() + ".txt";
         List<String> linhas = new ArrayList<>();
         boolean removido = false;
@@ -229,9 +229,17 @@ public class Medicao extends GerenciadorArquivos {
 
             while ((line = br.readLine()) != null) {
 
-                if (line.contains(dataBusca) && line.contains(horaBusca)) {
-                    removido = true;
-                    continue;
+                String[] partes = line.split("\\|");
+
+                if (partes.length >= 4) {
+
+                    String data = partes[1].replace("Data:", "").trim();
+                    String hora = partes[2].replace("Hora:", "").trim();
+
+                    if (data.equals(dataBusca) && hora.equals(horaBusca)) {
+                        removido = true;
+                        continue;
+                    }
                 }
 
                 linhas.add(line);
@@ -262,7 +270,16 @@ public class Medicao extends GerenciadorArquivos {
     }
 
     public String meuToString(LocalDate data, LocalTime hora) {
-        return String.format("Glicemia: %.2f | Data: %s | Hora: %s | Observação: %s", glicemia, data, hora, observacao);
+
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
+
+        return String.format(
+                "Glicemia: %.2f | Data: %s | Hora: %s | Observação: %s",
+                glicemia,
+                data.format(formatterData),
+                hora.format(formatterHora),
+                observacao);
     }
 
     public Double getGlicemia() {
