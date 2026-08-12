@@ -57,6 +57,8 @@ public class GerenciadorArquivos {
         }
     }
 
+    
+
     public String getNomeArquivo() {
         return nomeArquivo;
     }

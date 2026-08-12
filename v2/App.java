@@ -21,8 +21,8 @@ public class App {
 
             while (op != 0) {
                 System.out.println("------------------------- Controle de glicemia ------------------------------");
-                System.out.println("1 - Adicionar medição   |   2 - Listar medições  |   3 - Medição ranking   ");
-                System.out.println("4 - Hora ranking        |   5 - Buscar           |   6 - Remover medição   ");
+                System.out.println("1 - Adicionar medição   |   2 - Listar medições  |   3 - Média             ");
+                System.out.println("4 - Hora/Data ranking   |   5 - Buscar           |   6 - Remover medição   ");
                 System.out.println("0 - Sair                |");
                 System.out.print("> ");
                 op = sc.nextInt();
@@ -81,6 +81,12 @@ public class App {
                             System.out.println("Opção inválida. Voltando ao menu.");
                         }
                     
+                        break;
+                    
+                    case 3:
+                        System.out.print("Média glicêmica: ");
+                        medicao.media();
+
                         break;
                     case 0:
                         System.out.println("Saindo...");
