@@ -98,6 +98,22 @@ public class App {
                         System.out.println("Ranking completo das medições:");
                         medicao.rankingCompleto();
                         break;
+                    case 5:
+                        System.out.println("Buscar medições por data:");
+                        System.out.print("Digite a data (dd/mm/aaaa): ");
+                        String dataBusca = sc.nextLine();
+                        medicao.buscarPorData(dataBusca);
+                        break;
+                    case 6:
+                        System.out.println("Remover medição por data e hora:");
+                        System.out.print("Digite a data (dd/mm/aaaa): ");
+                        String dataRemover = sc.nextLine();
+                        System.out.print("Digite a hora (hh:mm): ");
+                        String horaRemover = sc.nextLine();
+                        
+                        medicao.removerPorDataHoraCSV(dataRemover, horaRemover);
+                        medicao.removerPorDataHoraTXT(dataRemover, horaRemover);
+                        break;
                     case 0:
                         System.out.println("Saindo...");
                         for (int i = 0; i < 10; i++) {

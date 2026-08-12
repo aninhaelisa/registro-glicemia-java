@@ -1,7 +1,9 @@
 package v2.entities;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -69,7 +71,7 @@ public class Medicao extends GerenciadorArquivos {
     public void maiorMenor() {
         String line;
         try (BufferedReader br = new BufferedReader(new FileReader(super.getNomeArquivo() + ".csv"))) {
-            String linhaCabecalho = br.readLine(); // Lê a primeira linha (cabeçalho) e a ignora
+            br.readLine(); // Lê a primeira linha (cabeçalho) e a ignora
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(";");
                 if (values.length > 0) {
@@ -99,7 +101,7 @@ public class Medicao extends GerenciadorArquivos {
         List<String[]> medidas = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(super.getNomeArquivo() + ".csv"))) {
-            String linhaCabecalho = br.readLine();
+            br.readLine();
 
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(";");
@@ -128,6 +130,134 @@ public class Medicao extends GerenciadorArquivos {
                             medida[0] + " mg/dL | " +
                             medida[1] + " | " +
                             medida[2]);
+        }
+    }
+
+    public void buscarPorData(String dataBusca) {
+        String line;
+
+        try (BufferedReader br = new BufferedReader(
+                new FileReader(super.getNomeArquivo() + ".csv"))) {
+
+            br.readLine();
+
+            boolean encontrou = false;
+
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(";");
+
+                if (values.length >= 3) {
+                    String data = values[1];
+
+                    if (data.equals(dataBusca)) {
+                        System.out.println(
+                                "Glicemia: " + values[0] + " mg/dL | " +
+                                        "Data: " + values[1] + " | " +
+                                        "Hora: " + values[2] + " | " +
+                                        "Observação: " + values[3]);
+
+                        encontrou = true;
+                    }
+                }
+            }
+
+            if (!encontrou) {
+                System.out.println("Nenhuma medição encontrada para a data: " + dataBusca);
+            }
+
+        } catch (IOException e) {
+            System.out.println(
+                    "Erro ao buscar medições por data: " + e.getMessage());
+        }
+    }
+
+    public void removerPorDataHoraCSV(String dataBusca, String horaBusca) {
+        String arquivo = super.getNomeArquivo() + ".csv";
+        List<String> linhas = new ArrayList<>();
+        boolean removido = false;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
+
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(";");
+
+                if (values.length >= 3
+                        && values[1].equals(dataBusca)
+                        && values[2].equals(horaBusca)) {
+
+                    removido = true;
+                    continue;
+                }
+
+                linhas.add(line);
+            }
+
+        } catch (IOException e) {
+            System.out.println("Erro ao ler o arquivo CSV: " + e.getMessage());
+            return;
+        }
+
+        if (!removido) {
+            System.out.println("Nenhuma medição encontrada.");
+            return;
+        }
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(arquivo))) {
+
+            for (String linha : linhas) {
+                bw.write(linha);
+                bw.newLine();
+            }
+
+            System.out.println("Medição removida com sucesso!");
+
+        } catch (IOException e) {
+            System.out.println("Erro ao reescrever o arquivo CSV: " + e.getMessage());
+        }
+    }
+
+    public void removerPorDataHoraTXT(String dataBusca, String horaBusca) {
+        String arquivo = super.getNomeArquivo() + ".txt";
+        List<String> linhas = new ArrayList<>();
+        boolean removido = false;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
+
+            String line;
+
+            while ((line = br.readLine()) != null) {
+
+                if (line.contains(dataBusca) && line.contains(horaBusca)) {
+                    removido = true;
+                    continue;
+                }
+
+                linhas.add(line);
+            }
+
+        } catch (IOException e) {
+            System.out.println("Erro ao ler o arquivo TXT: " + e.getMessage());
+            return;
+        }
+
+        if (!removido) {
+            System.out.println("Nenhuma medição encontrada.");
+            return;
+        }
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(arquivo))) {
+
+            for (String linha : linhas) {
+                bw.write(linha);
+                bw.newLine();
+            }
+
+            System.out.println("Medição removida com sucesso!");
+
+        } catch (IOException e) {
+            System.out.println("Erro ao reescrever o arquivo TXT: " + e.getMessage());
         }
     }
 
